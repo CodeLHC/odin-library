@@ -9,5 +9,32 @@
   </head>
   <body>
     <div id="bookList"></div>
+    <button id="newBook">New Book</button>
+
+    <dialog id="dialog">
+      <form>
+        <label for="BookTitle">Title of Book:</label><br />
+        <input type="text" id="bookTitle" /><br />
+
+        <label for="bookAuthor">Author of Book:</label><br />
+        <input type="text" id="bookAuthor" /><br />
+
+        <label for="bookPages">Amount of Pages:</label><br />
+        <input type="number" id="bookPages" /><br />
+
+        <p>Have you read this book yet?</p>
+        <input type="radio" id="readStatusYes" name="readStatus" value="Yes" />
+        <label for="readStatusYes">Yes</label><br />
+        <input type="radio" id="readStatusNo" name="readStatus" value="No" />
+        <label for="readStatusNo">No</label><br />
+        <input
+          type="radio"
+          id="readStatusProgress"
+          name="readStatus"
+          value="In progress"
+        />
+        <label for="readStatusProgress">In progress</label>
+      </form>
+    </dialog>
   </body>
 </html>

@@ -1,4 +1,6 @@
 const bookListContainer = document.getElementById("bookList");
+const newBookButton = document.getElementById("newBook");
+const dialog = document.getElementById("dialog");
 
 const library = ["The Hobbit", "Meditations", "Bible"];
 
@@ -24,3 +26,4 @@ function generateBookList(array) {
 }
 
 generateBookList(library);
+// dialog.show();
