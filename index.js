@@ -22,6 +22,14 @@ function addBookToLibrary(title, author, pages, readStatus) {
   library.push(book);
 }
 
+function generateRemoveButton(div) {
+  const removeButton = document.createElement("button");
+  removeButton.setAttribute("id", "removeButton");
+  const removeButtonText = document.createTextNode("Remove from Library");
+  removeButton.appendChild(removeButtonText);
+  div.appendChild(removeButton);
+}
+
 function generateBookList(array) {
   removeAllChildNodes(bookListContainer);
   array.forEach((book) => {
@@ -32,6 +40,7 @@ function generateBookList(array) {
     by ${book.author}
     ${book.pages} pages
    Read status: ${book.readStatus}`;
+    generateRemoveButton(bookDiv);
   });
 }
 
