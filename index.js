@@ -29,11 +29,15 @@ function generateRemoveButton(div, id) {
   removeButton.appendChild(removeButtonText);
   div.appendChild(removeButton);
   removeButton.addEventListener("click", () => {
-    const index = library.findIndex((book) => {
-      return book.title === id;
-    });
+    const index = findIndexToRemoveElement();
     document.getElementById(id).remove();
     library.splice(index, 1);
+  });
+}
+
+function findIndexToRemoveElement(id) {
+  library.findIndex((book) => {
+    return book.title === id;
   });
 }
 
