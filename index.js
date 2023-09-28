@@ -22,12 +22,19 @@ function addBookToLibrary(title, author, pages, readStatus) {
   library.push(book);
 }
 
-function generateRemoveButton(div) {
+function generateRemoveButton(div, id) {
   const removeButton = document.createElement("button");
   removeButton.setAttribute("id", "removeButton");
   const removeButtonText = document.createTextNode("Remove from Library");
   removeButton.appendChild(removeButtonText);
   div.appendChild(removeButton);
+  removeButton.addEventListener("click", () => {
+    const index = library.findIndex((book) => {
+      return book.title === id;
+    });
+    document.getElementById(id).remove();
+    library.splice(index, 1);
+  });
 }
 
 function generateBookList(array) {
@@ -35,12 +42,13 @@ function generateBookList(array) {
   array.forEach((book) => {
     const bookDiv = document.createElement("div");
     bookDiv.classList.add("book");
+    bookDiv.setAttribute("id", book.title);
     bookListContainer.appendChild(bookDiv);
     bookDiv.innerText = `${book.title}
     by ${book.author}
     ${book.pages} pages
    Read status: ${book.readStatus}`;
-    generateRemoveButton(bookDiv);
+    generateRemoveButton(bookDiv, book.title);
   });
 }
 
