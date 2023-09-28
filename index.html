@@ -12,7 +12,7 @@
     <button id="newBook">Add New Book</button>
 
     <dialog id="dialog">
-      <form>
+      <form id="form">
         <label for="BookTitle">Title of Book:</label><br />
         <input type="text" id="bookTitle" /><br />
 
@@ -23,10 +23,20 @@
         <input type="number" id="bookPages" /><br />
 
         <p>Have you read this book yet?</p>
-        <input type="radio" id="readStatusYes" name="readStatus" value="Yes" />
-        <label for="readStatusYes">Yes</label><br />
-        <input type="radio" id="readStatusNo" name="readStatus" value="No" />
-        <label for="readStatusNo">No</label><br />
+        <input
+          type="radio"
+          id="readStatusYes"
+          name="readStatus"
+          value="Completed"
+        />
+        <label for="readStatusYes">Completed</label><br />
+        <input
+          type="radio"
+          id="readStatusNo"
+          name="readStatus"
+          value="Not started"
+        />
+        <label for="readStatusNo">Not started</label><br />
         <input
           type="radio"
           id="readStatusProgress"

@@ -22,17 +22,27 @@ function addBookToLibrary(title, author, pages, readStatus) {
 }
 
 function generateBookList(array) {
+  removeAllChildNodes(bookListContainer);
   array.forEach((book) => {
     const bookDiv = document.createElement("div");
     bookDiv.classList.add("book");
     bookListContainer.appendChild(bookDiv);
-    bookDiv.innerText = book;
+    bookDiv.innerText = `${book.title}
+    by ${book.author}
+    ${book.pages} pages
+   Read status: ${book.readStatus}`;
   });
 }
 
 function getReadStatusCheckedValue() {
   const checkedValue = Array.from(readStatus).find((radio) => radio.checked);
   return checkedValue.value;
+}
+
+function removeAllChildNodes(parent) {
+  while (parent.firstChild) {
+    parent.removeChild(parent.firstChild);
+  }
 }
 
 submitButton.addEventListener("click", (e) => {
@@ -44,11 +54,10 @@ submitButton.addEventListener("click", (e) => {
   );
   dialog.close();
   console.log(library);
+  generateBookList(library);
   e.preventDefault();
 });
 
 newBookButton.addEventListener("click", () => {
   dialog.showModal();
 });
-
-generateBookList(library);
