@@ -5,8 +5,8 @@ const submitButton = document.getElementById("submitButton");
 const bookTitle = document.getElementById("bookTitle");
 const bookAuthor = document.getElementById("bookAuthor");
 const bookPages = document.getElementById("bookPages");
-const readStatus = document.getElementsByName("readStatus");
 const form = document.getElementById("form");
+const readStatus = document.getElementsByName("readStatus");
 
 const library = [];
 
@@ -17,9 +17,39 @@ function Book(title, author, pages, readStatus) {
   this.readStatus = readStatus;
 }
 
+Book.prototype.updateReadStatus = function () {
+  if (this.readStatus === "In progress") {
+    this.readStatus = "Completed";
+  } else if (this.readStatus === "Completed") {
+    this.readStatus = "Not started";
+  } else if (this.readStatus === "Not started") {
+    this.readStatus = "In progress";
+  }
+  return this.readStatus;
+};
+
 function addBookToLibrary(title, author, pages, readStatus) {
   const book = new Book(title, author, pages, readStatus);
   library.push(book);
+}
+
+function generateReadStatusButton(div, book) {
+  const readStatusButton = document.createElement("button");
+  readStatusButton.setAttribute("id", "readStatusButton");
+  let readButtonText = document.createTextNode(book.readStatus);
+  readStatusButton.appendChild(readButtonText);
+  div.appendChild(readStatusButton);
+
+  readStatusButton.addEventListener("click", () => {
+    removeAllChildNodes(readStatusButton);
+    readButtonText = document.createTextNode(book.updateReadStatus());
+    readStatusButton.appendChild(readButtonText);
+  });
+}
+
+function getReadStatusCheckedValue() {
+  const checkedValue = Array.from(readStatus).find((radio) => radio.checked);
+  return checkedValue.value;
 }
 
 function generateRemoveButton(div, id) {
@@ -51,14 +81,10 @@ function generateBookList(array) {
     bookDiv.innerText = `${book.title}
     by ${book.author}
     ${book.pages} pages
-   Read status: ${book.readStatus}`;
+   Read status:`;
+    generateReadStatusButton(bookDiv, book);
     generateRemoveButton(bookDiv, book.title);
   });
-}
-
-function getReadStatusCheckedValue() {
-  const checkedValue = Array.from(readStatus).find((radio) => radio.checked);
-  return checkedValue.value;
 }
 
 function removeAllChildNodes(parent) {
