@@ -6,6 +6,7 @@ const bookTitle = document.getElementById("bookTitle");
 const bookAuthor = document.getElementById("bookAuthor");
 const bookPages = document.getElementById("bookPages");
 const readStatus = document.getElementsByName("readStatus");
+const form = document.getElementById("form");
 
 const library = [];
 
@@ -53,8 +54,8 @@ submitButton.addEventListener("click", (e) => {
     getReadStatusCheckedValue()
   );
   dialog.close();
-  console.log(library);
   generateBookList(library);
+  form.reset();
   e.preventDefault();
 });
 
