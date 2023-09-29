@@ -1,6 +1,7 @@
 const bookListContainer = document.getElementById("bookList");
 const newBookButton = document.getElementById("newBook");
 const submitButton = document.getElementById("submitButton");
+const closeButton = document.getElementById("closeButton");
 const dialog = document.getElementById("dialog");
 const form = document.getElementById("form");
 const bookTitle = document.getElementById("bookTitle");
@@ -125,6 +126,11 @@ submitButton.addEventListener("click", (e) => {
 
 newBookButton.addEventListener("click", () => {
   dialog.showModal();
+});
+
+closeButton.addEventListener("click", () => {
+  dialog.close();
+  form.reset();
 });
 
 // form validation functions
