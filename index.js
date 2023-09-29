@@ -28,9 +28,38 @@ Book.prototype.updateReadStatus = function () {
   return this.readStatus;
 };
 
+Book.prototype.updateReadStatusClass = function (rsButton) {
+  if (this.readStatus === "In progress") {
+    rsButton.classList.remove("notStarted");
+    rsButton.classList.add("progress");
+  } else if (this.readStatus === "Completed") {
+    rsButton.classList.remove("progress");
+    rsButton.classList.add("completed");
+  } else if (this.readStatus === "Not started") {
+    rsButton.classList.remove("completed");
+    rsButton.classList.add("notStarted");
+  }
+};
+
 function addBookToLibrary(title, author, pages, readStatus) {
   const book = new Book(title, author, pages, readStatus);
   library.push(book);
+}
+
+function generateBookList(array) {
+  removeAllChildNodes(bookListContainer);
+  array.forEach((book) => {
+    const bookDiv = document.createElement("div");
+    bookDiv.classList.add("book");
+    bookDiv.setAttribute("id", book.title);
+    bookListContainer.appendChild(bookDiv);
+    bookDiv.innerText = `${book.title}
+    by ${book.author}
+    ${book.pages} pages
+   Read status:`;
+    generateReadStatusButton(bookDiv, book);
+    generateRemoveButton(bookDiv, book.title);
+  });
 }
 
 function generateReadStatusButton(div, book) {
@@ -38,12 +67,14 @@ function generateReadStatusButton(div, book) {
   readStatusButton.setAttribute("id", "readStatusButton");
   let readButtonText = document.createTextNode(book.readStatus);
   readStatusButton.appendChild(readButtonText);
+  book.updateReadStatusClass(readStatusButton);
   div.appendChild(readStatusButton);
 
   readStatusButton.addEventListener("click", () => {
     removeAllChildNodes(readStatusButton);
     readButtonText = document.createTextNode(book.updateReadStatus());
     readStatusButton.appendChild(readButtonText);
+    book.updateReadStatusClass(readStatusButton);
   });
 }
 
@@ -68,22 +99,6 @@ function generateRemoveButton(div, id) {
 function findIndexToRemoveElement(id) {
   library.findIndex((book) => {
     return book.title === id;
-  });
-}
-
-function generateBookList(array) {
-  removeAllChildNodes(bookListContainer);
-  array.forEach((book) => {
-    const bookDiv = document.createElement("div");
-    bookDiv.classList.add("book");
-    bookDiv.setAttribute("id", book.title);
-    bookListContainer.appendChild(bookDiv);
-    bookDiv.innerText = `${book.title}
-    by ${book.author}
-    ${book.pages} pages
-   Read status:`;
-    generateReadStatusButton(bookDiv, book);
-    generateRemoveButton(bookDiv, book.title);
   });
 }
 
