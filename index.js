@@ -1,11 +1,11 @@
 const bookListContainer = document.getElementById("bookList");
 const newBookButton = document.getElementById("newBook");
-const dialog = document.getElementById("dialog");
 const submitButton = document.getElementById("submitButton");
+const dialog = document.getElementById("dialog");
+const form = document.getElementById("form");
 const bookTitle = document.getElementById("bookTitle");
 const bookAuthor = document.getElementById("bookAuthor");
 const bookPages = document.getElementById("bookPages");
-const form = document.getElementById("form");
 const readStatus = document.getElementsByName("readStatus");
 
 const library = [];
@@ -127,6 +127,29 @@ newBookButton.addEventListener("click", () => {
   dialog.showModal();
 });
 
+// form validation functions
+
+function validateForm() {
+  const titleError = validateBookTitle(bookTitle.value);
+  if (titleError) {
+    alert(titleError);
+    return false;
+  }
+
+  const authorError = validateAuthor(bookAuthor.value);
+  if (authorError) {
+    alert(authorError);
+    return false;
+  }
+
+  const pageError = validatePages(bookPages.value);
+  if (pageError) {
+    alert(pageError);
+    return false;
+  }
+  return true;
+}
+
 function validateBookTitle(title) {
   if (title.length == 0) {
     return "Book title cannot be empty";
@@ -152,25 +175,4 @@ function validatePages(pages) {
     return "Pages must be fewer than 20,000";
   }
   return "";
-}
-
-function validateForm() {
-  const titleError = validateBookTitle(bookTitle.value);
-  if (titleError) {
-    alert(titleError);
-    return false;
-  }
-
-  const authorError = validateAuthor(bookAuthor.value);
-  if (authorError) {
-    alert(authorError);
-    return false;
-  }
-
-  const pageError = validatePages(bookPages.value);
-  if (pageError) {
-    alert(pageError);
-    return false;
-  }
-  return true;
 }
