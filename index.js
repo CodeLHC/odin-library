@@ -109,18 +109,68 @@ function removeAllChildNodes(parent) {
 }
 
 submitButton.addEventListener("click", (e) => {
-  addBookToLibrary(
-    bookTitle.value,
-    bookAuthor.value,
-    bookPages.value,
-    getReadStatusCheckedValue()
-  );
-  dialog.close();
-  generateBookList(library);
-  form.reset();
+  if (validateForm()) {
+    addBookToLibrary(
+      bookTitle.value,
+      bookAuthor.value,
+      bookPages.value,
+      getReadStatusCheckedValue()
+    );
+    dialog.close();
+    generateBookList(library);
+    form.reset();
+  }
   e.preventDefault();
 });
 
 newBookButton.addEventListener("click", () => {
   dialog.showModal();
 });
+
+function validateBookTitle(title) {
+  if (title.length == 0) {
+    return "Book title cannot be empty";
+  }
+  return "";
+}
+
+function validateAuthor(author) {
+  const regexNoNumbersOrSpecialChars = /^[a-zA-Z\s\-]+$/;
+  if (author.length === 0) {
+    return "Author's name can't be blank";
+  } else if (!author.match(regexNoNumbersOrSpecialChars)) {
+    return "Author's name can't contain numbers or special characters";
+  }
+  return "";
+}
+
+function validatePages(pages) {
+  const regexDigitsOnly = /\d/g;
+  if (!pages.match(regexDigitsOnly)) {
+    return "Pages must be numbers only";
+  } else if (pages.length > 20000) {
+    return "Pages must be fewer than 20,000";
+  }
+  return "";
+}
+
+function validateForm() {
+  const titleError = validateBookTitle(bookTitle.value);
+  if (titleError) {
+    alert(titleError);
+    return false;
+  }
+
+  const authorError = validateAuthor(bookAuthor.value);
+  if (authorError) {
+    alert(authorError);
+    return false;
+  }
+
+  const pageError = validatePages(bookPages.value);
+  if (pageError) {
+    alert(pageError);
+    return false;
+  }
+  return true;
+}
