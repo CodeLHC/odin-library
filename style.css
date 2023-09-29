@@ -80,5 +80,9 @@ button,
 #formButtons {
   margin: 5px;
   display: flex;
-  gap: 18px;
+  gap: 40px;
+}
+
+input {
+  font-size: 18px;
 }
