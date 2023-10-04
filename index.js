@@ -18,13 +18,17 @@ function Book(title, author, pages, readStatus) {
   this.readStatus = readStatus;
 }
 
+const inProgress = "In progress";
+const completed = "Completed";
+const notStarted = "Not started";
+
 Book.prototype.updateReadStatus = function () {
-  if (this.readStatus === "In progress") {
-    this.readStatus = "Completed";
-  } else if (this.readStatus === "Completed") {
-    this.readStatus = "Not started";
-  } else if (this.readStatus === "Not started") {
-    this.readStatus = "In progress";
+  if (this.readStatus === inProgress) {
+    this.readStatus = completed;
+  } else if (this.readStatus === completed) {
+    this.readStatus = notStarted;
+  } else if (this.readStatus === notStarted) {
+    this.readStatus = inProgress;
   }
   return this.readStatus;
 };
@@ -65,7 +69,7 @@ function generateBookList(array) {
 
 function generateReadStatusButton(div, book) {
   const readStatusButton = document.createElement("button");
-  readStatusButton.setAttribute("id", "readStatusButton");
+  readStatusButton.setAttribute("class", "readStatusButton");
   let readButtonText = document.createTextNode(book.readStatus);
   readStatusButton.appendChild(readButtonText);
   book.updateReadStatusClass(readStatusButton);
@@ -86,12 +90,12 @@ function getReadStatusCheckedValue() {
 
 function generateRemoveButton(div, id) {
   const removeButton = document.createElement("button");
-  removeButton.setAttribute("id", "removeButton");
+  removeButton.setAttribute("class", "removeButton");
   const removeButtonText = document.createTextNode("Remove from Library");
   removeButton.appendChild(removeButtonText);
   div.appendChild(removeButton);
   removeButton.addEventListener("click", () => {
-    const index = findIndexToRemoveElement();
+    const index = findIndexToRemoveElement(id);
     document.getElementById(id).remove();
     library.splice(index, 1);
   });
@@ -174,10 +178,10 @@ function validateAuthor(author) {
 }
 
 function validatePages(pages) {
-  const regexDigitsOnly = /\d/g;
-  if (!pages.match(regexDigitsOnly)) {
-    return "Pages must be numbers only";
-  } else if (pages.length > 20000) {
+  const isNumber = Number(+pages.length);
+  if (!isNumber) {
+    return "Pages must have numbers only";
+  } else if (parseInt(pages) > 20000) {
     return "Pages must be fewer than 20,000";
   }
   return "";
