@@ -11,40 +11,40 @@ const readStatus = document.getElementsByName("readStatus");
 
 const library = [];
 
-function Book(title, author, pages, readStatus) {
-  this.title = title;
-  this.author = author;
-  this.pages = pages;
-  this.readStatus = readStatus;
+class Book {
+  constructor(title, author, pages, readStatus) {
+    this.title = title;
+    this.author = author;
+    this.pages = pages;
+    this.readStatus = readStatus;
+  }
+  updateReadStatus() {
+    if (this.readStatus === inProgress) {
+      this.readStatus = completed;
+    } else if (this.readStatus === completed) {
+      this.readStatus = notStarted;
+    } else if (this.readStatus === notStarted) {
+      this.readStatus = inProgress;
+    }
+    return this.readStatus;
+  }
+  updateReadStatusClass(rsButton) {
+    if (this.readStatus === "In progress") {
+      rsButton.classList.remove("notStarted");
+      rsButton.classList.add("progress");
+    } else if (this.readStatus === "Completed") {
+      rsButton.classList.remove("progress");
+      rsButton.classList.add("completed");
+    } else if (this.readStatus === "Not started") {
+      rsButton.classList.remove("completed");
+      rsButton.classList.add("notStarted");
+    }
+  }
 }
 
 const inProgress = "In progress";
 const completed = "Completed";
 const notStarted = "Not started";
-
-Book.prototype.updateReadStatus = function () {
-  if (this.readStatus === inProgress) {
-    this.readStatus = completed;
-  } else if (this.readStatus === completed) {
-    this.readStatus = notStarted;
-  } else if (this.readStatus === notStarted) {
-    this.readStatus = inProgress;
-  }
-  return this.readStatus;
-};
-
-Book.prototype.updateReadStatusClass = function (rsButton) {
-  if (this.readStatus === "In progress") {
-    rsButton.classList.remove("notStarted");
-    rsButton.classList.add("progress");
-  } else if (this.readStatus === "Completed") {
-    rsButton.classList.remove("progress");
-    rsButton.classList.add("completed");
-  } else if (this.readStatus === "Not started") {
-    rsButton.classList.remove("completed");
-    rsButton.classList.add("notStarted");
-  }
-};
 
 function addBookToLibrary(title, author, pages, readStatus) {
   const book = new Book(title, author, pages, readStatus);
